@@ -1,4 +1,3 @@
-package javafxapplication;
 
 import java.util.Scanner;
 import parking.ParkingLot;
