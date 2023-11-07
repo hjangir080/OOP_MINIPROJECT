@@ -12,12 +12,12 @@ public class ParkingFloor {
         }
     }
 
-    void parkVehicle(Vehicle vehicle) throws Exception {
+    int parkVehicle(Vehicle vehicle) throws Exception {
         for (int i = 0; i < slots.length; i++) {
             if (!slots[i].isOccupied()) {
                 slots[i].parkVehicle(vehicle);
                 System.out.println(vehicle.getType() + " with Num Plate " + vehicle.getNumPlate() + " parked successfully in Slot " + i + " on Floor " + vehicle.getFloor());
-                return;
+                return i; // Return the slot number where the vehicle was parked
             }
         }
         throw new Exception("Floor is full. No available slots for " + vehicle.getType() + ".");
@@ -31,7 +31,7 @@ public class ParkingFloor {
                 if (retrievedVehicle != null) {
                     return retrievedVehicle;
                 } else {
-                    System.out.println("Error: Slot already empty.");
+                    System.out.println("Slot empty.");
                     return null;
                 }
             }
