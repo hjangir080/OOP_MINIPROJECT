@@ -12,8 +12,9 @@ public class ParkingLot {
         }
     }
 
-    public void parkVehicle(Vehicle vehicle) throws Exception {
-        floors[vehicle.getFloor()].parkVehicle(vehicle);
+    public int parkVehicle(Vehicle vehicle) throws Exception {
+        int slotNumber = floors[vehicle.getFloor()].parkVehicle(vehicle);
+        return slotNumber;
     }
 
     public Vehicle retrieveVehicle(int floor, String numPlate) {
