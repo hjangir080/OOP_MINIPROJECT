@@ -1,6 +1,7 @@
 package javafxapplication;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,12 +30,15 @@ public class ParkingApp extends Application {
 
         Button parkButton = new Button("Park Vehicle");
         parkButton.setOnAction(e -> showParkDialog());
+        parkButton.setAlignment(Pos.CENTER);
 
         Button retrieveButton = new Button("Retrieve Vehicle");
         retrieveButton.setOnAction(e -> showRetrieveDialog());
+        retrieveButton.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(parkButton, retrieveButton);
+        vbox.setAlignment(Pos.CENTER); // Center the VBox content
 
         Scene scene = new Scene(vbox, 300, 200);
         primaryStage.setScene(scene);
@@ -72,9 +76,11 @@ public class ParkingApp extends Application {
                 showAlert("Error", ex.getMessage());
             }
         });
+        parkButton.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(typeLabel, typeField, numPlateLabel, numPlateField, parkButton);
+        vbox.setAlignment(Pos.CENTER); // Center the VBox content
 
         Scene scene = new Scene(vbox, 300, 150);
         parkStage.setScene(scene);
@@ -112,9 +118,11 @@ public class ParkingApp extends Application {
 
             retrieveStage.close();
         });
+        retrieveButton.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(floorLabel, floorField, numPlateLabel, numPlateField, retrieveButton);
+        vbox.setAlignment(Pos.CENTER); // Center the VBox content
 
         Scene scene = new Scene(vbox, 300, 150);
         retrieveStage.setScene(scene);
@@ -129,13 +137,3 @@ public class ParkingApp extends Application {
         alert.showAndWait();
     }
 }
-
-
-
-public class Main {
-    public static void main(String[] args) {
-        ParkingApp.main(args);
-    }
-}
-
-
