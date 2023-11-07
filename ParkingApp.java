@@ -2,6 +2,7 @@ package javafxapplication;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -49,15 +50,16 @@ public class ParkingApp extends Application {
         Stage parkStage = new Stage();
         parkStage.setTitle("Park Vehicle");
 
-        Label typeLabel = new Label("Vehicle Type (Car/Bike/Truck):");
-        TextField typeField = new TextField();
+        Label typeLabel = new Label("Vehicle Type:");
+        ComboBox<String> typeComboBox = new ComboBox<>();
+        typeComboBox.getItems().addAll("Car", "Bike", "Truck");
 
         Label numPlateLabel = new Label("Vehicle Number Plate:");
         TextField numPlateField = new TextField();
 
         Button parkButton = new Button("Park");
         parkButton.setOnAction(e -> {
-            String type = typeField.getText().toLowerCase();
+            String type = typeComboBox.getValue().toLowerCase(); // Retrieve selected item from combo box
             String numPlate = numPlateField.getText();
 
             try {
@@ -79,13 +81,14 @@ public class ParkingApp extends Application {
         parkButton.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(typeLabel, typeField, numPlateLabel, numPlateField, parkButton);
+        vbox.getChildren().addAll(typeLabel, typeComboBox, numPlateLabel, numPlateField, parkButton);
         vbox.setAlignment(Pos.CENTER); // Center the VBox content
 
         Scene scene = new Scene(vbox, 300, 150);
         parkStage.setScene(scene);
         parkStage.show();
     }
+
 
     private void parkVehicle(Vehicle vehicle) throws ParkingException {
         try {
