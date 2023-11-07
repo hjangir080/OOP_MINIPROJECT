@@ -90,14 +90,20 @@ public class ParkingApp extends Application {
     }
 
 
-    private void parkVehicle(Vehicle vehicle) throws ParkingException {
+    private void parkVehicle(Vehicle vehicle) {
         try {
-            parkingLot.parkVehicle(vehicle);
-            showAlert("Success", vehicle.getType() + " parked successfully.");
+            int floor = vehicle.getFloor();
+            Object slot = parkingLot.parkVehicle(vehicle); // Assuming parkVehicle method returns the slot number
+            showAlert("Success", vehicle.getType() + " parked successfully on Floor " + floor + ", Slot " + slot + ".");
+        } catch (ParkingException e) {
+            showAlert("Error", "Parking Error: " + e.getMessage());
         } catch (Exception e) {
-            throw new ParkingException("Error: " + e.getMessage());
+            showAlert("Error", "An unexpected error occurred: " + e.getMessage());
         }
     }
+
+
+
 
     private void showRetrieveDialog() {
         Stage retrieveStage = new Stage();
