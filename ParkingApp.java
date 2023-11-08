@@ -1,5 +1,4 @@
 package javafxapplication;
-
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
@@ -89,7 +88,6 @@ public class ParkingApp extends Application {
         parkStage.show();
     }
 
-
     private void parkVehicle(Vehicle vehicle) {
         try {
             int floor = vehicle.getFloor();
@@ -102,9 +100,6 @@ public class ParkingApp extends Application {
         }
     }
 
-
-
-
     private void showRetrieveDialog() {
         Stage retrieveStage = new Stage();
         retrieveStage.setTitle("Retrieve Vehicle");
@@ -115,14 +110,19 @@ public class ParkingApp extends Application {
         Label numPlateLabel = new Label("Vehicle Number Plate:");
         TextField numPlateField = new TextField();
 
+        Label hoursParkedLabel = new Label("Hours Parked:");
+        TextField hoursParkedField = new TextField();
+
         Button retrieveButton = new Button("Retrieve");
         retrieveButton.setOnAction(e -> {
             int floor = Integer.parseInt(floorField.getText());
             String numPlate = numPlateField.getText();
+            int hoursParked = Integer.parseInt(hoursParkedField.getText());
 
-            Vehicle retrievedVehicle = parkingLot.retrieveVehicle(floor, numPlate);
+            Object retrievedVehicle = parkingLot.retrieveVehicle(floor, numPlate,hoursParked);
             if (retrievedVehicle != null) {
-                showAlert("Success", "Vehicle retrieved successfully.");
+                double payment = calculatePayment(hoursParked);
+                showAlertWithPayment("Success", "Vehicle retrieved successfully.", payment);
             }
 
             retrieveStage.close();
@@ -130,10 +130,10 @@ public class ParkingApp extends Application {
         retrieveButton.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(floorLabel, floorField, numPlateLabel, numPlateField, retrieveButton);
+        vbox.getChildren().addAll(floorLabel, floorField, numPlateLabel, numPlateField, hoursParkedLabel, hoursParkedField, retrieveButton);
         vbox.setAlignment(Pos.CENTER); // Center the VBox content
 
-        Scene scene = new Scene(vbox, 300, 150);
+        Scene scene = new Scene(vbox, 300, 200);
         retrieveStage.setScene(scene);
         retrieveStage.show();
     }
@@ -145,10 +145,31 @@ public class ParkingApp extends Application {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void showAlertWithPayment(String title, String message, double payment) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message + "\nPayment: $" + payment);
+        alert.showAndWait();
+    }
+
+    private double calculatePayment(int hoursParked) {
+        if (hoursParked < 1) {
+            return 20;
+        } else if (hoursParked < 2) {
+            return 40;
+        } else if (hoursParked < 4) {
+            return 60;
+        } else {
+            return 1000;
+        }
+    }
 }
 
 
 
+//MAIN CLASS
 package javafxapplication;
 
 public class Main {
