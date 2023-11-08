@@ -1,11 +1,8 @@
-
 import java.util.Scanner;
 import parking.ParkingLot;
 import vehicles.Car;
 import vehicles.Bike;
 import vehicles.Truck;
-import vehicles.Vehicle;
-
 
 public class Main {
     public static void main(String[] args) {
@@ -23,7 +20,7 @@ public class Main {
             System.out.println("5. Exit");
 
             int choice = sc.nextInt();
-            sc.nextLine(); // Consume the newline character after reading the choice
+            sc.nextLine();//buffer
 
             switch (choice) {
                 case 1:
@@ -62,12 +59,17 @@ public class Main {
                 case 4:
                     System.out.println("Enter Floor Number (0, 1, 2):");
                     int floorNumber = sc.nextInt();
-                    sc.nextLine(); // Consume the newline character after reading the floor number
+                    sc.nextLine(); // buffer
                     System.out.println("Enter Num Plate of the vehicle:");
                     String numPlate = sc.nextLine();
-                    Vehicle retrievedVehicle = parkingLot.retrieveVehicle(floorNumber, numPlate);
+                    System.out.println("Enter the number of hours parked:");
+                    int hoursParked = sc.nextInt();
+                    sc.nextLine();
+
+                    Object retrievedVehicle = parkingLot.retrieveVehicle(floorNumber, numPlate,hoursParked);
                     if (retrievedVehicle != null) {
-                        System.out.println("Vehicle with Num Plate " + numPlate + " retrieved successfully from Floor " + floorNumber + ".");
+                        double payment = calculatePayment(hoursParked);
+                        System.out.println("Payment for vehicle with Num Plate " + numPlate + " is: $" + payment);
                     }
                     break;
 
@@ -79,6 +81,18 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+
+    private static double calculatePayment(int hoursParked) {
+        if (hoursParked < 1) {
+            return 20;
+        } else if (hoursParked < 2) {
+            return 40;
+        } else if (hoursParked < 4) {
+            return 60;
+        } else {
+            return 1000;
         }
     }
 }
