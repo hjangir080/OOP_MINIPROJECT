@@ -17,12 +17,18 @@ public class ParkingLot {
         return slotNumber;
     }
 
-    public Vehicle retrieveVehicle(int floor, String numPlate) {
+    public double retrieveVehicle(int floor, String numPlate,int hoursParked) {
         if (floor >= 0 && floor < floors.length) {
-            return floors[floor].retrieveVehicle(numPlate);
-        } else {
-            System.out.println("Invalid floor number.");
+            Vehicle retrievedVehicle= floors[floor].retrieveVehicle(numPlate,hoursParked);
+            if (retrievedVehicle != null) {
+                double payment = retrievedVehicle.getPayment();
+                System.out.println("Payment for vehicle with Num Plate " + numPlate + " is: $" + payment);
+                return payment;
+            }
+            else {
+                System.out.println("Invalid floor number.");
+            }
         }
-        return null;
+        return 0;
     }
 }
